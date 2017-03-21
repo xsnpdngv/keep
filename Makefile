@@ -1,7 +1,7 @@
 # =============================================================================
 # @file    Makefile
 # @brief   GnuPG key handling, encryption and decryption
-# @author  Tamas Dezso
+# @author  Tamas Dezso <dezso.t.tamas@gmail.com>
 # @date    March 21, 2017
 # =============================================================================
 
@@ -33,9 +33,9 @@ import: public_key.asc private_key.asc
 	$(PGP) --import private_key.asc
 
 # encrypt
-%.asc: %
+%.asc:: %
 	$(PGP) --encrypt --default-recipient-self --armor -o $@ $< && rm -i $<
 
 # decrypt
-%: %.asc
+%:: %.asc
 	umask 077; $(PGP) --decrypt -o $@ $<
