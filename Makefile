@@ -3,9 +3,6 @@
 # @brief   GnuPG key handling, encryption and decryption
 # @author  Tamas Dezso
 # @date    March 21, 2017
-#
-# to encrypt e.g., sample.txt:     make sample.txt.asc
-# to decrypt e.g., sample.txt.asc: make sample.txt
 # =============================================================================
 
 PGP = gpg2

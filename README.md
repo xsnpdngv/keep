@@ -1,21 +1,23 @@
-PGP make
-========
+Keep files safe with PGP
+========================
 
-Makefile for basic PGP (Pretty Good Privacy) operations (keygen, export/import,
-encrypt/decrypt) utilizing the GnuPG (GNU Privacy Guard) implementation.
+This is a Makefile project for basic PGP (Pretty Good Privacy) operations
+(keygen, export/import, encrypt/decrypt) utilizing the GnuPG (GNU Privacy Guard)
+implementation in order to easily encrypt and decrypt files with sensitive
+content.
 
 
 
 Prerequisites
 -------------
 
-Install GnuPG package
+Install GnuPG package on Debian/Ubuntu machine:
 
 ```bash
 sudo apt-get install gnupg2
 ```
 
-or for other OS download from GnuPG's site:
+or for other OS download from GnuPG's site and install:
 
 [https://www.gnupg.org/download/index.en.html](https://www.gnupg.org/download/index.en.html)
 
