@@ -34,7 +34,7 @@ import: public_key.asc private_key.asc
 
 # encrypt
 %.asc:: %
-	$(PGP) --encrypt --default-recipient-self --armor -o $@ $< && rm -i $<
+	$(PGP) --encrypt --default-recipient-self --armor -o $@ $< && ./sdel.sh $<
 
 # decrypt
 %:: %.asc
