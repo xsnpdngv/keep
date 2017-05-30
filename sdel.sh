@@ -4,9 +4,9 @@
 #
 # usage: sdel.sh FILE...
 #
-# In case gshred or shred is available, files given as command line
-# arguments are going to be securely deletes, otherwise a simple
-# rm -f will take place.
+# In case gshred or shred is available, FILE(s) given as command line
+# arguments are going to be securely deleted, otherwise a simple
+# remove command (rm -f) will take place.
 
 # check whether [g]shred is available to delete with
 sdel="rm -f"
