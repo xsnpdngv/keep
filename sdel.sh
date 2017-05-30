@@ -1,12 +1,14 @@
 #!/bin/bash
+# ==========================================================================
+# @file    sdel.sh
+# @brief   shell script to secure delete files
+# @author  Tamas Dezso <dezso.t.tamas@gmail.com>
+# @date    May 30, 2017
 #
-# sdel - secure delete files (shell script)
-#
-# usage: sdel.sh FILE...
-#
-# In case gshred or shred is available, FILE(s) given as command line
+# In case [g]shred is available, FILE(s) given as command line
 # arguments are going to be securely deleted, otherwise a simple
 # remove command (rm -f) will take place.
+# ==========================================================================
 
 # check whether [g]shred is available to delete with
 sdel="rm -f"
