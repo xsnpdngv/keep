@@ -6,18 +6,19 @@
 # =============================================================================
 
 PGP = gpg2
-EDITOR ?= vi
 #UID = "Tamas Dezso"
 
-.PHONY: help keys export import Makefile
+.PHONY: help keys export import decrypt Makefile
 
 # help
 help:
-	@echo "make keys      Generate key pair"
-	@echo "make export    Export key pair to ascii files"
-	@echo "make import    Import public_key.asc and private_key.asc"
-	@echo "make file.asc  Encrypt file <file> to self"
-	@echo "make file      Decrypt file <file.asc> and open result in $(EDITOR)"
+	@echo "Usage:\n\
+    make file.asc  Encrypt: file -> file.asc (file is secure deleted)\n\
+    make file      Decrypt: file.asc -> file (file.asc is kept)\n\
+    make decrypt   Decrypt *.asc\n\
+    make keys      Generate key pair\n\
+    make export    Export keys to public_key.asc, private_key.asc\n\
+    make import    Import keys from public_key.asc and private_key.asc"
 
 # keygen
 keys:
@@ -33,11 +34,15 @@ import: public_key.asc private_key.asc
 	$(PGP) --import public_key.asc
 	$(PGP) --import private_key.asc
 
-# encrypt
+# encrypt: file -> file.asc
 %.asc:: %
-	$(PGP) --encrypt --default-recipient-self --armor -o $@ $< && ./sdel.sh $<
+	$(PGP) --encrypt --default-recipient-self --armor -o $@ $<
+	./sdel.sh $<
 
-# decrypt
+# decrypt: file.asc -> file
 %:: %.asc
 	umask 077; $(PGP) --decrypt -o $@ $<
-	$(EDITOR) $@
+	touch -r $? $@ # to be no newer than the encrypted one
+
+# decrypt *.asc
+decrypt: $(basename $(wildcard *.asc))
