@@ -6,6 +6,7 @@
 # =============================================================================
 
 PGP = gpg2
+EDITOR ?= vi
 #UID = "Tamas Dezso"
 
 .PHONY: help keys export import Makefile
@@ -16,7 +17,7 @@ help:
 	@echo "make export    Export key pair to ascii files"
 	@echo "make import    Import public_key.asc and private_key.asc"
 	@echo "make file.asc  Encrypt file <file> to self"
-	@echo "make file      Decrypt file <file.asc>"
+	@echo "make file      Decrypt file <file.asc> and open result in $(EDITOR)"
 
 # keygen
 keys:
@@ -39,3 +40,4 @@ import: public_key.asc private_key.asc
 # decrypt
 %:: %.asc
 	umask 077; $(PGP) --decrypt -o $@ $<
+	$(EDITOR) $@
