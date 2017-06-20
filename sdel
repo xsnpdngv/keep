@@ -5,11 +5,13 @@
 # @author  Tamas Dezso <dezso.t.tamas@gmail.com>
 # @date    May 30, 2017
 #
-# sdel.sh FILE...
+# sdel [-f] FILE...
 #
 # In case [g]shred or secure-delete (srm) is available, FILE(s) given as
 # command line arguments are going to be securely deleted, otherwise a
-# simple forced remove command (rm -f) will take place.
+# simple remove command (rm) will take place.
+#
+# -f   Remove FILE(s) without prompting for confirmation
 # ==========================================================================
 
 # check if any secure delete command is available
