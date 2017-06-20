@@ -6,16 +6,20 @@
 # =============================================================================
 
 PGP = gpg2
+ASC = $(wildcard *.asc)
+SEC = $(filter-out $(ASC) $(PROJECT),$(wildcard *))
+PROJECT = Makefile README.md sdel
 #UID = "Tamas Dezso"
 
-.PHONY: help keys export import decrypt Makefile
+.PHONY: help keys export import plain clean Makefile
 
 # help
 help:
 	@echo "Usage:\n\
-    make file.asc  Encrypt: file -> file.asc (file is secure deleted)\n\
-    make file      Decrypt: file.asc -> file (file.asc is kept)\n\
-    make decrypt   Decrypt *.asc\n\
+    make file.asc  Encrypt: file -> file.asc\n\
+    make file      Decrypt: file.asc -> file\n\
+    make clean     Encrypt plain files if needed, then remove originals\n\
+    make plain     Decrypt *.asc\n\
     make keys      Generate key pair\n\
     make export    Export keys to public_key.asc, private_key.asc\n\
     make import    Import keys from public_key.asc and private_key.asc"
@@ -36,13 +40,19 @@ import: public_key.asc private_key.asc
 
 # encrypt: file -> file.asc
 %.asc:: %
-	$(PGP) --encrypt --default-recipient-self --armor -o $@ $<
-	./sdel.sh $<
+	@$(PGP) --encrypt --default-recipient-self --armor -o $@ $<
+#	@./sdel $<
 
 # decrypt: file.asc -> file
 %:: %.asc
-	umask 077; $(PGP) --decrypt -o $@ $<
-	touch -r $? $@ # to be no newer than the encrypted one
+	@umask 077; $(PGP) --decrypt -o $@ $<
+	@touch -r $? $@ # to be no newer than the encrypted one
 
 # decrypt *.asc
-decrypt: $(basename $(wildcard *.asc))
+plain: $(basename $(ASC))
+
+# if file is present as .asc too, and is no newer than that, then
+# it is simply removed, otherwise it is encrypted before
+clean:
+	$(MAKE) $(SEC:=.asc)
+	@./sdel -f $(SEC)

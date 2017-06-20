@@ -1,0 +1,34 @@
+#!/bin/bash
+# ==========================================================================
+# @file    sdel
+# @brief   shell script to secure delete files
+# @author  Tamas Dezso <dezso.t.tamas@gmail.com>
+# @date    May 30, 2017
+#
+# sdel.sh FILE...
+#
+# In case [g]shred or secure-delete (srm) is available, FILE(s) given as
+# command line arguments are going to be securely deleted, otherwise a
+# simple forced remove command (rm -f) will take place.
+# ==========================================================================
+
+# check if any secure delete command is available
+sdel="rm -f"
+command -v gshred >/dev/null 2>&1 && sdel="gshred -zvun 5"
+command -v  shred >/dev/null 2>&1 && sdel="shred -zvun 5"
+command -v    srm >/dev/null 2>&1 && sdel="srm -v"
+
+# check if forced delete
+[ $# -ge 1 -a "$1" = "-f" ] && is_sdel=y && shift
+
+# exit if no args given/left
+[ $# -eq 0 ] && exit 0
+
+# confirm deletion if not forced
+if [ ${is_sdel:-n} != "y" ]
+then
+    echo -n "Delete ($sdel) file(s): $@? (y/N) "; read is_sdel
+fi
+
+# perform deletion if confirmed or forced
+[[ "${is_sdel:0:1}" =~ [yY] ]] && $sdel "$@"
