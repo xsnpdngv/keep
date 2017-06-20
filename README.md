@@ -19,7 +19,7 @@ sudo apt-get install gnupg2
 
 or for other OS download from GnuPG's site and install:
 
-[https://www.gnupg.org/download/index.en.html](https://www.gnupg.org/download/index.en.html)
+[www.gnupg.org/download/index.en.html](https://www.gnupg.org/download/index.en.html)
 
 
 Usage
@@ -46,10 +46,9 @@ To do so set the `UID` in the Makefile to the one whose keys are to be
 ported and `make export`. On the target machine with the same Makefile and
 the exported keys along `make import`.
 
-### Encrypting/Decrypting Files
+### Encrypt/Decrypt Files
 
-To encrypt a file with the name `filename` (and optionally delete the
-plain one after encryption):
+To encrypt a file with the name `filename`:
 
 ```bash
 make filename.asc
@@ -60,4 +59,17 @@ original one:
 
 ```bash
 make filename
+```
+
+To decrypt all encrypted files `*.asc`:
+
+```bash
+make plain
+```
+
+To clean directory from plain (sensitive) files by encrypting them if needed
+and securely delete them:
+
+```bash
+make clean
 ```
