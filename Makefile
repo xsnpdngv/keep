@@ -41,7 +41,7 @@ import: public_key.asc private_key.asc
 # encrypt: file -> file.asc
 %.asc:: %
 	@$(PGP) --encrypt --default-recipient-self --armor -o $@ $<
-#	@./sdel $<
+	@./sdel $<
 
 # decrypt: file.asc -> file
 %:: %.asc
