@@ -15,7 +15,7 @@ PROJECT = Makefile README.md sdel
 
 # help
 help:
-	@echo "Usage:\n\
+	@echo -e "Usage:\n\
     make file.asc  Encrypt: file -> file.asc\n\
     make file      Decrypt: file.asc -> file\n\
     make clean     Encrypt plain files if needed, then remove originals\n\
